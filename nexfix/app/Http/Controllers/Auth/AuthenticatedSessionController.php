@@ -23,12 +23,30 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+    {   
 
-        $request->session()->regenerate();
+        $request->validate([
+            'email'=> 'required|string|email',
+            'password'=>'required|string',
+        ]);
+        $credentials = $request->only('email','password');
+        if (Auth::attempt($credentials,$request->boolean('remember')))
+        {
+            $request->session()->regenerate();
+            $user = Auth::user();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+            return redirect()->intended(match($user->role)
+            {
+                'admin' => '/admin/dashboard',
+                'vendor' => '/vendor/dashboard',
+                default =>'/user/dashboard',
+            });
+        }
+        
+
+        return back()->withErrors([
+            'password'=>'invalid email or password'
+        ]);
     }
 
     /**
