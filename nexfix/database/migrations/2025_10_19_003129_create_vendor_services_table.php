@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('vendor_services', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->decimal('custom_price',10,2)->default(0);
+            $table->enum('status',['active','inactive'])->default('active');
             $table->timestamps();
         });
     }
