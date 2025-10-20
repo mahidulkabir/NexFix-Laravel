@@ -16,6 +16,14 @@
                         </div>
                     </div>
                     <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-th me-2"></i>Services category</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="button.html" class="dropdown-item fw-bold">Add Service category</a>
+                            <a href="typography.html" class="dropdown-item fw-bold">View Service category</a>
+                            <a href="element.html" class="dropdown-item fw-bold">Edit Service category</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-th me-2"></i>Services</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="button.html" class="dropdown-item fw-bold">Add Service</a>
