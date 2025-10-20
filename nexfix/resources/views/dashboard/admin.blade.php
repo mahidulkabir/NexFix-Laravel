@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin_Home_page')
 
 @section('content')
 <h1>Welcome, {{ auth()->user()->name }}!</h1>

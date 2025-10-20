@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky-top">
     @php
         $role = auth()->user()->role ?? 'user';
         $dashboardRoute = match($role) {
@@ -14,11 +14,11 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ $dashboardRoute }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+                    <a href="#" class="sidebar-toggler h-4">
+                    <i class="fa fa-bars"></i>
+                </a>
                 </div>
-
+               
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="$dashboardRoute" :active="request()->is($role . '/dashboard')">
