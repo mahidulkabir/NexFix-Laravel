@@ -20,9 +20,9 @@ public function run(): void
     $this->call(AdminUserSeeder::class);
     $this->call([
     UserSeeder::class,
-    VendorSeeder::class,
-    ServiceSeeder::class,
-    BookingSeeder::class,
+//    VendorSeeder::class,
+//     ServiceSeeder::class,
+//     BookingSeeder::class, 
 ]);
 
     $category = \App\Models\ServiceCategory::create([
