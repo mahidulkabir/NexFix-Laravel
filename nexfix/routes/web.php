@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\AdminController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,7 +25,11 @@ Route::middleware(['auth', 'role:user'])->get('/user/dashboard', [UserController
 Route::middleware(['auth', 'role:vendor'])->get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+// route for admin dashboard 
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
 
 
 
