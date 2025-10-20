@@ -27,9 +27,11 @@ Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminControl
 
 // route for admin dashboard 
 
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-// });
+// Routes for service category 
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function() {
+    Route::resource('service-categories', App\Http\Controllers\Admin\ServiceCategoryController::class);
+});
+
 
 
 
