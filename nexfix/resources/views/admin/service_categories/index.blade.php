@@ -7,9 +7,9 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-<a href="{{ route('service-categories.create') }}" class="btn btn-primary mb-3">Add Category</a>
 
-<table class="table table-bordered">
+
+<table class="table table-bordered my-5">
     <thead>
         <tr>
             <th>ID</th>
@@ -37,4 +37,5 @@
         @endforeach
     </tbody>
 </table>
+<a href="{{ route('service-categories.create') }}" class="btn btn-primary mb-3 float-end">Add Category</a>
 @endsection

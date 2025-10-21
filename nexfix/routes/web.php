@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ServiceCategoryController;
+
 
 
 Route::get('/', function () {
@@ -28,8 +30,10 @@ Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminControl
 // route for admin dashboard 
 
 // Routes for service category 
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function() {
-    Route::resource('service-categories', App\Http\Controllers\Admin\ServiceCategoryController::class);
+
+
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('service-categories', ServiceCategoryController::class);
 });
 
 
