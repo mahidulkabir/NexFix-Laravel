@@ -10,10 +10,10 @@
 
 <div class="mb-3">
     <label>Category</label>
-    <select name="category_id" class="form-control" required>
+    <select name="service_category_id" class="form-control" required>
         <option value="">Select Category</option>
         @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ (old('category_id', $service->category_id ?? '') == $category->id) ? 'selected' : '' }}>
+            <option value="{{ $category->id }}" {{ (old('service_category_id', $service->service_category_id ?? '') == $category->id) ? 'selected' : '' }}>
                 {{ $category->name }}
             </option>
         @endforeach

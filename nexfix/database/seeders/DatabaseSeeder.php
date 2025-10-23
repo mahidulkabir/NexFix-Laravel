@@ -33,7 +33,9 @@ public function run(): void
     $service = \App\Models\Service::create([
         'service_category_id' => $category->id,
         'name' => 'Bathroom Cleaning',
-        'base_price' => 500
+        'description' => 'Comprehensive bathroom cleaning service.',
+        'base_price' => 500,
+        'active' => true
     ]);
 
     $vendor = \App\Models\Vendor::create([

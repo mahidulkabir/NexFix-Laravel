@@ -35,15 +35,15 @@ class ServiceController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'description'=>'required',
-            'category_id'=>'required|exists:service_categories,id',
+            'service_category_id'=>'required|exists:service_categories,id',
             'base_price'=>'required|numeric|min:0',
-            'image'=>'required|image|mimes:jpg,jpeg,max:512',
+            'image'=>'required|image|mimes:jpg,jpeg|max:512',
         ]);
           $imagePath=$request->file('image')->store('services','public');
           Service::create([
             'name'=>$request->name,
             'description'=> $request->description,
-            'category_id'=>$request->category_id,
+            'service_category_id'=>$request->service_category_id,
             'base_price'=>$request->base_price,
             'image'=>$imagePath,
             'active'=>$request->has('active'),
@@ -76,11 +76,11 @@ class ServiceController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'description'=>'required',
-            'category_id' =>'required|exists:service_categories,id',
+            'service_category_id' =>'required|exists:service_categories,id',
             'base_price' =>'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:512',
+            'image' => 'nullable|image|mimes:jpg,jpeg|max:512',
         ]);
-        $data = $request->only(['name', 'description', 'category_id', 'base_price', 'active']);
+        $data = $request->only(['name', 'description', 'service_category_id', 'base_price', 'active']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('services', 'public');
