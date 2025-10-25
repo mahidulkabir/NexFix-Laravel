@@ -10,9 +10,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Vendors</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item fw-bold">Add Vendor</a>
-                            <a href="typography.html" class="dropdown-item fw-bold">View Vendor</a>
-                            <a href="element.html" class="dropdown-item fw-bold">Edit Vendor</a>
+                            <a href="{{ route('vendors.create') }}" class="dropdown-item fw-bold">Add Vendor</a>
+                            <a href="{{ route('vendors.index') }}" class="dropdown-item fw-bold">View Vendor</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -36,7 +35,6 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="button.html" class="dropdown-item fw-bold">Add Booking</a>
                             <a href="typography.html" class="dropdown-item fw-bold">View Booking</a>
-                            <a href="element.html" class="dropdown-item fw-bold">Edit Booking</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

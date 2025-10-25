@@ -3,10 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VendorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\VendorController;
 
 
 Route::get('/', function () {
@@ -35,6 +35,8 @@ Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminControl
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('service-categories', ServiceCategoryController::class);
     Route::resource('services', ServiceController::class);
+    Route::resource('vendors', VendorController::class);
+
 });
 
 
