@@ -45,6 +45,14 @@
                             <a href="element.html" class="dropdown-item fw-bold">Edit Payment</a>
                         </div>
                     </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>Reviews</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="button.html" class="dropdown-item fw-bold">Add Payment</a>
+                            <a href="typography.html" class="dropdown-item fw-bold">View Payment</a>
+                            <a href="element.html" class="dropdown-item fw-bold">Edit Payment</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </nav>
