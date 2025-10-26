@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ReviewController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +40,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('vendors', VendorController::class);
     Route::resource('bookings', BookingController::class);
     Route::resource('payments', PaymentController::class);
+    Route::resource('admin/reviews',ReviewController::class);
+
 
 });
 
