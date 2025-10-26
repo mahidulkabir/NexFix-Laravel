@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
         $table->decimal('amount', 10, 2);
-        $table->enum('payment_method', ['cash', 'card', 'online'])->default('cash');
-        $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
+        $table->enum('method', ['cash', 'card', 'online'])->default('cash');
+        $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
             $table->timestamps();
         });
     }
