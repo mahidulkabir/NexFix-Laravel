@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VendorController;
-
+use App\Http\Controllers\Admin\BookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +36,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('service-categories', ServiceCategoryController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('vendors', VendorController::class);
+    Route::resource('bookings', BookingController::class);
 
 });
 
