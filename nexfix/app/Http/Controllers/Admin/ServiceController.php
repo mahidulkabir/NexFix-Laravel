@@ -35,6 +35,7 @@ class ServiceController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'description'=>'required',
+            'details'=>'required',
             'service_category_id'=>'required|exists:service_categories,id',
             'base_price'=>'required|numeric|min:0',
             'image'=>'required|image|mimes:jpg,jpeg|max:512',
@@ -43,6 +44,7 @@ class ServiceController extends Controller
           Service::create([
             'name'=>$request->name,
             'description'=> $request->description,
+            'details'=> $request->details,
             'service_category_id'=>$request->service_category_id,
             'base_price'=>$request->base_price,
             'image'=>$imagePath,
@@ -67,6 +69,11 @@ class ServiceController extends Controller
         $categories=ServiceCategory::all();
         return view('admin.services.edit',compact('service','categories'));
     }
+    public function showPortalService(Service $service)
+    {
+        $services=ServiceCategory::all();
+        return view('portal.index',compact('service','services'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -76,11 +83,12 @@ class ServiceController extends Controller
         $request->validate([
             'name'=>'required|string|max:255',
             'description'=>'required',
+            'details'=>'required',
             'service_category_id' =>'required|exists:service_categories,id',
             'base_price' =>'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg|max:512',
         ]);
-        $data = $request->only(['name', 'description', 'service_category_id', 'base_price', 'active']);
+        $data = $request->only(['name', 'description', 'details', 'service_category_id', 'base_price', 'active']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('services', 'public');

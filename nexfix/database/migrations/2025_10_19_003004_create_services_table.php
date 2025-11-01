@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('service_category_id')->constrained('service_categories')->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->longText('details')->nullable();
             $table->decimal('base_price', 10, 2)->default(0);
             $table->string('image')->nullable();
             $table->boolean('active')->default(true); 

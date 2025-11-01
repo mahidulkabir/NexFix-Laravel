@@ -9,14 +9,22 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\PortalController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('portal.index');
 });
+
+// Route::get('/', [ServiceCategoryController::class, 'showServiceCategory'])->name('portal.index');
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/', [PortalController::class, 'index'])->name('portal.index');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

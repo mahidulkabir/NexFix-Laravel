@@ -11,6 +11,13 @@ class ServiceCategoryController extends Controller
         $categories = ServiceCategory::all();
         return view('admin.service_categories.index', compact('categories'));
     }
+    public function showServiceCategory(){
+        $categories = ServiceCategory::all();
+        return view('portal.index', compact('categories'));
+    }
+
+
+
 
     public function create() {
         return view('admin.service_categories.create');
