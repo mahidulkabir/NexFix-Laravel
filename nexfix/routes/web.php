@@ -10,11 +10,14 @@ use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\VendorController as ControllersVendorController;
+use App\Http\Controllers\VendorDashboardController;
 
 Route::get('/', function () {
     return view('portal.index');
 });
-
+Route::get('/service-detail/{id}', [PortalController::class, 'serviceDetail'])
+    ->name('portal.serviceDetail');
 // Route::get('/', [ServiceCategoryController::class, 'showServiceCategory'])->name('portal.index');
 
 
@@ -33,9 +36,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:user'])->get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-Route::middleware(['auth', 'role:vendor'])->get('/vendor/dashboard', [VendorController::class, 'index'])->name('vendor.dashboard');
+// Route::middleware(['auth', 'role:vendor'])->get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+
+Route::middleware(['auth','role:vendor'])->group(function () {
+    Route::get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
+    Route::get('/vendor/bookings', [VendorDashboardController::class, 'bookings'])->name('vendor.bookings');
+});
 // route for admin dashboard 
 
 // Routes for service category 

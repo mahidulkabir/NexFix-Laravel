@@ -55,8 +55,8 @@
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                         class="fa fa-star me-2"></i>Reviews</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href="{{ route('reviews.create') }}" class="dropdown-item fw-bold">Add Review</a>
-                    <a href="{{ route('reviews.index') }}" class="dropdown-item fw-bold">View Reviews</a>
+                    {{-- <a href="{{ route('reviews.create') }}" class="dropdown-item fw-bold">Add Review</a>
+                    <a href="{{ route('reviews.index') }}" class="dropdown-item fw-bold">View Reviews</a> --}}
                 </div>
             </div>
 

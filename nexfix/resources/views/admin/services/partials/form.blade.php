@@ -7,6 +7,10 @@
     <label>Description</label>
     <textarea name="description" class="form-control" required>{{ old('description', $service->description ?? '') }}</textarea>
 </div>
+<div class="mb-3">
+    <label>Details</label>
+    <textarea name="details" class="form-control" required>{{ old('details', $service->details ?? '') }}</textarea>
+</div>
 
 <div class="mb-3">
     <label>Category</label>

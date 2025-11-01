@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <title>User Dashboard</title>
+    <title>Vendor Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
@@ -13,8 +13,7 @@
     {{-- Your custom user nav --}}
    <nav class="bg-green-100 border-b border-green-200 p-4 flex space-x-4">
     <a href="{{ route('vendor.dashboard') }}" class="text-green-800">Dashboard</a>
-    {{-- <a href="{{ route('vendor.jobs') }}" class="text-green-800">Jobs</a>
-    <a href="{{ route('vendor.earnings') }}" class="text-green-800">Earnings</a> --}}
+   
 </nav>
 
     {{-- Main content --}}

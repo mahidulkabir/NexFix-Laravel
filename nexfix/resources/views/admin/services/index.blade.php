@@ -14,6 +14,7 @@
         <tr>
             <th>Image</th>
             <th>Name</th>
+            <th>Details</th>
             <th>Category</th>
             <th>Description</th>
             <th>Base Price</th>
@@ -32,6 +33,8 @@
                     @endif
                 </td>
                 <td>{{ $service->name }}</td>
+                <td>{{ $service->details }}</td>
+
                 <td>{{ $service->category->name ?? 'N/A' }}</td>
                 <td>
                     {{ \Illuminate\Support\Str::limit($service->description, 50, '...') }}

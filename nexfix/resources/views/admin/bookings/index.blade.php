@@ -15,6 +15,7 @@
                 <th>ID</th>
                 <th>User</th>
                 <th>Service</th>
+                <th>Vendor Name</th>
                 <th>Date</th>
                 <th>Address</th>
                 <th>Status</th>
@@ -27,6 +28,7 @@
                 <td>{{ $booking->id }}</td>
                 <td>{{ $booking->user->name ?? 'N/A' }}</td>
                 <td>{{ $booking->vendorService->service->name ?? 'N/A' }}</td>
+                <td>{{ $booking->vendorService->vendor->company_name ?? 'N/A' }}</td>
                 <td>{{ $booking->date }}</td>
                 <td>{{ $booking->address }}</td>
                 <td>{{ ucfirst($booking->status) }}</td>

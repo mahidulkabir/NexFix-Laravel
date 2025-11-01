@@ -14,4 +14,9 @@ class PortalController extends Controller
 
         return view('portal.index', compact('categories', 'services'));
     }
+    public function serviceDetail($id)
+    {
+        $service = Service::findOrFail($id);
+        return view('portal.serviceDetail',compact('service'));
+    }
 }

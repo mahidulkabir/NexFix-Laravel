@@ -74,7 +74,7 @@ class ServiceController extends Controller
         $services=ServiceCategory::all();
         return view('portal.index',compact('service','services'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
