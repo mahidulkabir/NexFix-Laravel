@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceCategory;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 
 class PortalController extends Controller
 {
@@ -19,4 +20,18 @@ class PortalController extends Controller
         $service = Service::findOrFail($id);
         return view('portal.serviceDetail',compact('service'));
     }
+
+   public function checkoutRedirect($id)
+{
+    $service = Service::findOrFail($id);
+
+    if (!Auth::check()) {
+        // User not logged in → remember this service and go to login
+        session(['intended_service' => $id]);
+        return redirect()->route('login');
+    }
+
+    // User logged in → show checkout page
+    return view('portal.checkout', compact('service'));
+}
 }

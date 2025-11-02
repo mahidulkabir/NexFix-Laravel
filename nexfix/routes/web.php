@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 Route::get('/service-detail/{id}', [PortalController::class, 'serviceDetail'])
     ->name('portal.serviceDetail');
+
+Route::get('/checkout/{id}',[PortalController::class,'checkoutRedirect'])->name('checkout.redirect');
 // Route::get('/', [ServiceCategoryController::class, 'showServiceCategory'])->name('portal.index');
 
 

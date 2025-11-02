@@ -22,33 +22,38 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {   
+   public function store(LoginRequest $request): RedirectResponse
+{
+    $request->validate([
+        'email'=> 'required|string|email',
+        'password'=>'required|string',
+    ]);
 
-        $request->validate([
-            'email'=> 'required|string|email',
-            'password'=>'required|string',
-        ]);
-        $credentials = $request->only('email','password');
-        if (Auth::attempt($credentials,$request->boolean('remember')))
-        {
-            $request->session()->regenerate();
-            $user = Auth::user();
+    $credentials = $request->only('email','password');
 
-            return redirect()->intended(match($user->role)
-            {
-                'admin' => '/admin/dashboard',
-                'vendor' => '/vendor/dashboard',
-                default =>'/user/dashboard',
-            });
+    if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $request->session()->regenerate();
+        $user = Auth::user();
+
+        // 🔹 Redirect back to checkout if user came from serviceDetail
+        if (session()->has('intended_service')) {
+            $serviceId = session()->pull('intended_service');
+            return redirect()->route('checkout.redirect', ['id' => $serviceId]);
         }
-        
 
-        return back()->withErrors([
-            'password'=>'invalid email or password'
-        ]);
+        // 🔹 Otherwise normal redirect
+        return redirect()->intended(match($user->role)
+        {
+            'admin' => '/admin/dashboard',
+            'vendor' => '/vendor/dashboard',
+            default => '/user/dashboard',
+        });
     }
 
+    return back()->withErrors([
+        'password' => 'invalid email or password',
+    ]);
+}
     /**
      * Destroy an authenticated session.
      */

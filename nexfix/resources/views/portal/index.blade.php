@@ -92,12 +92,20 @@
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
-                        <a href="{{ route('register') }}" class="my-auto me-3">
-                            <i class="fas fa-user-plus fa-2x"></i>
-                        </a>
-                        <a href="{{ route('login') }}" class="my-auto">
-                            <i class="fas fa-user fa-2x"></i>
-                        </a>
+                        <a href="{{ route('register') }}" 
+                            class="my-auto me-3" 
+                            data-bs-toggle="tooltip" 
+                            title="Register">
+                                <i class="fas fa-user-plus fa-2x"></i>
+                            </a>
+
+                            <a href="{{ route('login') }}" 
+                            class="my-auto" 
+                            data-bs-toggle="tooltip" 
+                            title="Login">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a>
+
                     </div>
                 </div>
             </nav>
@@ -1230,6 +1238,15 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js ') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>
+
 </body>
 
 </html>
