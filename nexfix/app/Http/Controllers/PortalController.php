@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceCategory;
 use App\Models\Service;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 
 class PortalController extends Controller
@@ -30,8 +31,10 @@ class PortalController extends Controller
         session(['intended_service' => $id]);
         return redirect()->route('login');
     }
-
+    // logged in user 
+    $user = Auth::user();
+    // $vendors = Vendor::where('service_id', $id)->get();
     // User logged in → show checkout page
-    return view('portal.checkout', compact('service'));
+    return view('portal.checkout', compact('service','user'));
 }
 }
