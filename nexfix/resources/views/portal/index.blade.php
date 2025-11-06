@@ -423,7 +423,7 @@
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-secondary rounded border border-secondary">
-                            <img src="img/featur-1.webp" class="img-fluid rounded-top w-100" alt="">
+                           <img src="{{ asset('img/featur-1.webp') }}" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-primary text-center p-4 rounded">
                                     <h5 class="text-white">Driving Course</h5>
@@ -436,7 +436,7 @@
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-dark rounded border border-dark">
-                            <img src="img/featur-2.webp" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('img/featur-2.webp') }}" class="img-fluid rounded-top w-100" alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-light text-center p-4 rounded">
                                     <h5 class="text-primary">Room Cleaning</h5>
@@ -449,7 +449,7 @@
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-primary rounded border border-primary">
-                            <img src="img/featur-3.webp" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('img/featur-3.webp') }}  " class="img-fluid rounded-top w-100" alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-secondary text-center p-4 rounded">
                                     <h5 class="text-white">Plumbing</h5>
