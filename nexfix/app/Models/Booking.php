@@ -6,24 +6,36 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {   
-    protected $fillable = 
-    ['user_id',
-     'vendor_service_id',
-      'date',
-      'address',
-      'status'];
+    protected $fillable = [
+        'user_id',
+        'vendor_service_id',
+        'booking_date',
+        'scheduled_at',
+        'address',
+        'status',
+        'total_amount',
+        'payment_status',
+        'notes',
+    ];
 
-    public function user(){
+    // Relationships
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function vendorService(){
+
+    public function vendorService()
+    {
         return $this->belongsTo(VendorService::class);
-    }
-    public function payment(){
-        return $this->belongsTo(VendorService::class);
-    }
-    public function review(){
-        return $this->hasOne(Review::class);
     }
 
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }
