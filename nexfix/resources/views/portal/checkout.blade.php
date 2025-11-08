@@ -61,7 +61,7 @@
                            
                             <div class="form-item">
                                 <label class="form-label my-3">Mobile<sup>*</sup></label>
-                                <input type="tel" class="form-control" value="01521784036">
+                                <input type="tel" class="form-control" value="{{$user->phone}}">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">Email Address<sup>*</sup></label>
