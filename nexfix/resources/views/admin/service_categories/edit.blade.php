@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<form action="{{ route('service-categories.update', $serviceCategory->id) }}" method="POST">
+<form action="{{ route('service-categories.update', $serviceCategory->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="mb-2">
@@ -23,6 +23,18 @@
     <div class="mb-2">
         <label>Description</label>
         <textarea name="description" class="form-control">{{ $serviceCategory->description }}</textarea>
+    </div>
+    <div class="mb-2">
+        <label>Current Image</label><br>
+        @if($serviceCategory->image)
+            <img src="{{ asset('storage/' . $serviceCategory->image) }}" alt="Category Image" width="100">
+        @else
+            <small>No Image</small>
+        @endif
+    </div>
+    <div class="mb-2">
+        <label>Change Image</label>
+        <input type="file" name="image" class="form-control" accept="image/*">
     </div>
     <button type="submit" class="btn btn-success">Update Category</button>
 </form>

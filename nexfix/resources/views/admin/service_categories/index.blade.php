@@ -7,12 +7,13 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-
+<a href="{{ route('service-categories.create') }}" class="btn btn-primary mb-3 float-end">Add Category</a>
 
 <table class="table table-bordered my-5">
     <thead>
         <tr>
             <th>ID</th>
+            <th>Image</th>
             <th>Name</th>
             <th>Description</th>
             <th>Actions</th>
@@ -22,6 +23,13 @@
         @foreach($categories as $category)
         <tr>
             <td>{{ $category->id }}</td>
+            <td>
+                @if($category->image)
+                    <img src="{{ asset('storage/' . $category->image) }}" alt="Category Image" width="70">
+                @else
+                    <small>No Image</small>
+                @endif
+            </td>
             <td>{{ $category->name }}</td>
             <td>{{ $category->description }}</td>
             <td>
@@ -37,5 +45,4 @@
         @endforeach
     </tbody>
 </table>
-<a href="{{ route('service-categories.create') }}" class="btn btn-primary mb-3 float-end">Add Category</a>
 @endsection

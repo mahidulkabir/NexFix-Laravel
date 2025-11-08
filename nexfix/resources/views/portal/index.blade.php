@@ -1,5 +1,5 @@
 <x-portal.layout>
-<!-- Modal Search Start -->
+    <!-- Modal Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content rounded-0">
@@ -28,8 +28,8 @@
                     <h4 class="mb-3 text-secondary">Your Personal Assistant</h4>
                     <h1 class="mb-5 display-3 text-primary">One-stop solution for your services.</h1>
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill"
-                            type="number" placeholder="Search">
+                        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number"
+                            placeholder="Search">
                         <button type="submit"
                             class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
                             style="top: 0; right: 25%;">Submit Now</button>
@@ -44,8 +44,7 @@
                                 <a href="#" class="btn px-4 py-2 text-white rounded">Repair</a>
                             </div>
                             <div class="carousel-item rounded">
-                                <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded"
-                                    alt="Second slide">
+                                <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide">
                                 <a href="#" class="btn px-4 py-2 text-white rounded">Clean</a>
                             </div>
                         </div>
@@ -78,8 +77,10 @@
                 @foreach ($categories as $category)
                     <div class="col-md-6 col-lg-3">
                         <div class="featurs-item text-center rounded bg-light p-4">
-                            <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
-                                <i class="fas fa-tools fa-3x text-white"></i>
+                            <div class="fruite-img mb-3">
+                                <!-- image -->
+                                <img src="{{ asset('storage/' . $category->image) }}" class="img-fluid w-100 rounded-top"
+                                    alt="">
                             </div>
                             <div class="featurs-content text-center">
                                 <h5 class="fw-bold">{{ $category->name }} </h5>
@@ -112,8 +113,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill"
-                                    href="#tab-2">
+                                <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
                                     <span class="text-dark" style="width: 130px;">Maintenance</span>
                                 </a>
                             </li>
@@ -162,9 +162,10 @@
                                                         <!-- price  -->
                                                         <p class="text-dark fs-5 fw-bold mb-0">
                                                             ${{ $service->base_price }}</p>
-                                                        <a href="{{ route('portal.serviceDetail',$service->id) }}"
+                                                        <a href="{{ route('portal.serviceDetail', $service->id) }}"
                                                             class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Book Now</a>
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Book
+                                                            Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -416,14 +417,15 @@
     <!-- Featurs Start -->
     <div class="container-fluid service py-5">
         <div class="container py-5">
-             <div class="col-lg-4 text-start my-4">
-                        <h1>Limited Time Offer</h1>
-                    </div>
+            <div class="col-lg-4 text-start my-4">
+                <h1>Limited Time Offer</h1>
+            </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-secondary rounded border border-secondary">
-                           <img src="{{ asset('img/featur-1.webp') }}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('img/featur-1.webp') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-primary text-center p-4 rounded">
                                     <h5 class="text-white">Driving Course</h5>
@@ -436,7 +438,8 @@
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-dark rounded border border-dark">
-                            <img src="{{ asset('img/featur-2.webp') }}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('img/featur-2.webp') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-light text-center p-4 rounded">
                                     <h5 class="text-primary">Room Cleaning</h5>
@@ -449,7 +452,8 @@
                 <div class="col-md-6 col-lg-4">
                     <a href="#">
                         <div class="service-item bg-primary rounded border border-primary">
-                            <img src="{{ asset('img/featur-3.webp') }}  " class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('img/featur-3.webp') }}  " class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="px-4 rounded-bottom">
                                 <div class="service-content bg-secondary text-center p-4 rounded">
                                     <h5 class="text-white">Plumbing</h5>
@@ -1006,6 +1010,6 @@
     </div>
     <!-- Tastimonial End -->
 
-    
+
 
 </x-portal.layout>

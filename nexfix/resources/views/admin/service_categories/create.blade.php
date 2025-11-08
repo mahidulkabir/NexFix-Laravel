@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<form action="{{ route('service-categories.store') }}" method="POST">
+<form action="{{ route('service-categories.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-2">
         <label>Name</label>
@@ -22,6 +22,10 @@
     <div class="mb-2">
         <label>Description</label>
         <textarea name="description" class="form-control"></textarea>
+    </div>
+    <div class="mb-2">
+        <label>Image</label>
+        <input type="file" name="image" class="form-control" accept="image/*">
     </div>
     <button type="submit" class="btn btn-success">Add Category</button>
 </form>
