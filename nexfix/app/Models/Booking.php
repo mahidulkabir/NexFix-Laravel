@@ -14,6 +14,7 @@ class Booking extends Model
         'address',
         'status',
         'total_amount',
+        'payment_method',
         'payment_status',
         'notes',
     ];

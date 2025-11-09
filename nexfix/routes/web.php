@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\VendorController as ControllersVendorController;
 use App\Http\Controllers\VendorDashboardController;
+use App\Http\Controllers\UserBookingController;
 
 Route::get('/', function () {
     return view('portal.index');
@@ -20,6 +21,12 @@ Route::get('/service-detail/{id}', [PortalController::class, 'serviceDetail'])
     ->name('portal.serviceDetail');
 
 Route::get('/checkout/{id}',[PortalController::class,'checkoutRedirect'])->name('checkout.redirect');
+
+
+Route::post('/checkoutOrder', [UserBookingController::class, 'store'])->name('checkout.store');
+
+
+
 // Route::get('/', [ServiceCategoryController::class, 'showServiceCategory'])->name('portal.index');
 
 

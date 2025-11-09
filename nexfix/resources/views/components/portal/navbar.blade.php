@@ -23,6 +23,24 @@
             </div> -->
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
+            @if(session('success'))
+    <div class="alert alert-success text-center mt-3" id="success-alert">
+        {{ session('success') }}
+    </div>
+
+    <script>
+        // Wait 3 seconds (3000 ms), then fade out the alert smoothly
+        setTimeout(() => {
+            const alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500); // Remove completely after fade-out
+            }
+        }, 3000);
+    </script>
+@endif
+
             <a href="{{route('portal.index')}}" class="navbar-brand">
                 <h1 class="text-primary display-6">NexFix</h1>
             </a>
