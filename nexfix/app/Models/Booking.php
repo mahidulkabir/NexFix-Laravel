@@ -8,6 +8,7 @@ class Booking extends Model
 {   
     protected $fillable = [
         'user_id',
+        'service_id',              // ✅ Added this line
         'vendor_service_id',
         'booking_date',
         'scheduled_at',
@@ -23,6 +24,11 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class); // ✅ New relationship
     }
 
     public function vendorService()

@@ -15,10 +15,13 @@
                 <th>ID</th>
                 <th>User</th>
                 <th>Service</th>
-                <th>Vendor Name</th>
-                <th>Date</th>
-                <th>Address</th>
+                <th>Vendor</th>
+                <th>Booking Date</th>
+                <th>Scheduled At</th>
+                <th>Total</th>
+                <th>Payment</th>
                 <th>Status</th>
+                <th>Notes</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -27,11 +30,14 @@
             <tr>
                 <td>{{ $booking->id }}</td>
                 <td>{{ $booking->user->name ?? 'N/A' }}</td>
-                <td>{{ $booking->vendorService->service->name ?? 'N/A' }}</td>
+                <td>{{ $booking->service->name ?? 'N/A' }}</td>
                 <td>{{ $booking->vendorService->vendor->company_name ?? 'N/A' }}</td>
-                <td>{{ $booking->date }}</td>
-                <td>{{ $booking->address }}</td>
+                <td>{{ $booking->booking_date }}</td>
+                <td>{{ $booking->scheduled_at ?? '-' }}</td>
+                <td>{{ $booking->total_amount ?? '0.00' }}</td>
+                <td>{{ ucfirst($booking->payment_status) }}</td>
                 <td>{{ ucfirst($booking->status) }}</td>
+                <td>{{ $booking->notes ?? '-' }}</td>
                 <td>
                     <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST" style="display:inline-block">

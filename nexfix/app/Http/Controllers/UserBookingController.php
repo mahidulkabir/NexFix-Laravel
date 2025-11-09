@@ -31,6 +31,7 @@ class UserBookingController extends Controller
         $booking = Booking::create([
             'user_id' => $user->id,
             'vendor_service_id' => null,
+            'service_id'=>$service->id,
             'booking_date' => now()->toDateString(),
             'scheduled_at' => $request->scheduled_at,
             'address' => $request->address,
