@@ -64,6 +64,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('vendors', VendorController::class);
     Route::resource('bookings', BookingController::class);
     Route::resource('payments', PaymentController::class);
+    Route::post('bookings/{id}/ajax-update', [BookingController::class, 'ajaxUpdate'])->name('bookings.ajaxUpdate');
+
 
 });
 

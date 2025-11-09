@@ -16,7 +16,8 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = Booking::with(['user', 'vendorService.vendor', 'service'])->latest()->get();
-        return view('admin.bookings.index', compact('bookings'));
+          $vendors = Vendor::all();
+        return view('admin.bookings.index', compact('bookings','vendors'));
     }
 // for creating new entry 
     public function create()
@@ -93,4 +94,54 @@ class BookingController extends Controller
         $booking->delete();
         return redirect()->route('bookings.index')->with('success', 'Booking deleted successfully.');
     }
+
+    public function ajaxUpdate(Request $request, $id)
+{
+    $booking = Booking::findOrFail($id);
+
+    $request->validate([
+        'vendor_id' => 'nullable|exists:vendors,id',
+        'payment_status' => 'required|in:paid,unpaid',
+        'status' => 'required|in:pending,accepted,completed,cancelled',
+    ]);
+
+    // Determine the current service_id
+    $service_id = $booking->vendorService?->service_id;
+
+    if ($request->vendor_id) {
+        if (!$service_id) {
+            // Booking has no vendorService yet, try to get first service
+            $vendorService = VendorService::where('vendor_id', $request->vendor_id)->first();
+            if (!$vendorService) {
+                return response()->json([
+                    'message' => 'Selected vendor does not provide any service.'
+                ], 422);
+            }
+            $booking->vendor_service_id = $vendorService->id;
+        } else {
+            // Booking has a service, find matching VendorService
+            $vendorService = VendorService::where('vendor_id', $request->vendor_id)
+                ->where('service_id', $service_id)
+                ->first();
+
+            if (!$vendorService) {
+                return response()->json([
+                    'message' => 'Selected vendor does not provide this service.'
+                ], 422);
+            }
+
+            $booking->vendor_service_id = $vendorService->id;
+        }
+    }
+
+    $booking->payment_status = $request->payment_status;
+    $booking->status = $request->status;
+    $booking->save();
+
+    return response()->json(['message' => 'Booking updated successfully!']);
+}
+
+
+
+
 }
