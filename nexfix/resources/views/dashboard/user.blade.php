@@ -1,30 +1,7 @@
-<x-portal.layout>
-    <div class="container py-5 hero-header mb-5 d-flex align-items-center justify-content-around">
-        <h2 class="mb-4">User Dashboard</h2>
+<x-userDashboard.layout>
+   
 
-        <ul class="navbar-nav d-flex flex-row gap-4 align-items-center">
-            <li class="nav-item">
-                <!-- <a href="#" class="nav-link">Profile</a> -->
-
-                 <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Edit Profile') }}
-                        </x-dropdown-link>
-
-            </li>
-
-            <!-- Logout button -->
-            <li class="nav-item">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-link nav-link p-0 m-0" style=" text-decoration: none;">
-                        Logout
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </div>
-
-    <div class="container-fluid py-5">
+    <div class="container py-5">
         <h2>This is your Dashboard</h2>
     </div>
 <!-- limited time offer  -->
@@ -76,4 +53,4 @@
             </div>
         </div>
     </div>
-</x-portal.layout>
+</x-userDashboard.layout>
