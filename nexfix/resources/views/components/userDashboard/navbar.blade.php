@@ -5,11 +5,11 @@
 
         <ul class="navbar-nav d-flex flex-row gap-4 align-items-center">
             <li class="nav-item">
-                My Bookings
+                <a href="">My Bookings</a>
 
             </li>
             <li class="nav-item">
-                My Payments
+               <a href=""> My Payments</a>
 
             </li>
             <li class="nav-item">

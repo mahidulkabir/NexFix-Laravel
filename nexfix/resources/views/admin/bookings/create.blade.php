@@ -12,6 +12,7 @@
 
     <form action="{{ route('bookings.store') }}" method="POST">
         @csrf
+
         <div class="mb-3">
             <label>User</label>
             <select name="user_id" class="form-control" required>
@@ -60,10 +61,20 @@
             </select>
         </div>
 
+        <!-- 🟢 CHANGED: Replaced old “status” field -->
         <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control" required>
-                <option value="pending">Pending</option>
+            <label>User Status</label>
+            <select name="status_user" class="form-control">
+                <option value="">--</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Vendor Status</label>
+            <select name="status_vendor" class="form-control">
+                <option value="">--</option>
                 <option value="accepted">Accepted</option>
                 <option value="completed">Completed</option>
                 <option value="cancelled">Cancelled</option>

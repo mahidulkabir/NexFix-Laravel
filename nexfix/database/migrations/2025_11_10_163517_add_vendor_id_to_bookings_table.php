@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            // Add the new column and foreign key
-            $table->foreignId('service_id')
-                  ->after('vendor_service_id')
-                  ->constrained('services')
-                  ->onDelete('cascade');
+            $table->foreignId('vendor_id')
+                  ->nullable()
+                  ->constrained('vendors')
+                  ->nullOnDelete();
         });
     }
 
@@ -26,9 +25,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bookings', function (Blueprint $table) {
-            // Drop the foreign key first, then the column
-            $table->dropForeign(['service_id']);
-            $table->dropColumn('service_id');
+            $table->dropForeign(['vendor_id']); // drop the foreign key
+            $table->dropColumn('vendor_id');    // drop the column
         });
     }
 };

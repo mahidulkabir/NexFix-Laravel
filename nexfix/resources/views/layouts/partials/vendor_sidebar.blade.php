@@ -70,6 +70,13 @@
                     </a>
                 </div>
             </div>
+            <!-- Live Orders-->
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link " >
+                    <i class="fa fa-credit-card me-2"></i>Collect Orders
+                </a>
+                
+            </div>
         </div>
     </nav>
 </div>

@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
-{   
+{
     protected $fillable = [
         'user_id',
-        'service_id',              // ✅ Added this line
+        'service_id',
         'vendor_service_id',
         'booking_date',
         'scheduled_at',
         'address',
-        'status',
         'total_amount',
         'payment_method',
         'payment_status',
+        'status_user',       
+        'status_vendor',     
         'notes',
     ];
 
@@ -28,7 +29,7 @@ class Booking extends Model
 
     public function service()
     {
-        return $this->belongsTo(Service::class); // ✅ New relationship
+        return $this->belongsTo(Service::class);
     }
 
     public function vendorService()
