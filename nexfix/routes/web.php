@@ -13,6 +13,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\VendorController as ControllersVendorController;
 use App\Http\Controllers\VendorDashboardController;
 use App\Http\Controllers\UserBookingController;
+use App\Http\Controllers\Vendor\VendorBookingController;
 
 Route::get('/', function () {
     return view('portal.index');
@@ -49,9 +50,17 @@ Route::middleware(['auth', 'role:user'])->get('/user/dashboard', [UserController
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
 
+
+
+
 Route::middleware(['auth','role:vendor'])->group(function () {
     Route::get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
     Route::get('/vendor/bookings', [VendorDashboardController::class, 'bookings'])->name('vendor.bookings');
+
+    // 🆕 New routes
+    Route::get('/vendor/collect-orders', [VendorBookingController::class, 'collectOrders'])->name('vendor.collect.orders');
+    Route::post('/vendor/accept-order/{id}', [VendorBookingController::class, 'acceptOrder'])->name('vendor.accept.order');
+    Route::get('/vendor/my-orders', [VendorBookingController::class, 'myOrders'])->name('vendor.my.orders');
 });
 // route for admin dashboard 
 

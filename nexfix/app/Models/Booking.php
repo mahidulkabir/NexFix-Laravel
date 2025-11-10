@@ -10,6 +10,7 @@ class Booking extends Model
         'user_id',
         'service_id',
         'vendor_service_id',
+        'vendor_id',
         'booking_date',
         'scheduled_at',
         'address',
@@ -46,4 +47,8 @@ class Booking extends Model
     {
         return $this->hasOne(Review::class);
     }
+    public function vendor()
+{
+    return $this->belongsTo(Vendor::class);
+}
 }

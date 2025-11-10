@@ -43,17 +43,10 @@
 
             <!-- My Bookings -->
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <i class="fa fa-calendar-check me-2"></i>My Bookings
+                <a href="{{ route('vendor.my.orders') }}" class="nav-link">
+                    <i class="fa fa-calendar-check me-2"></i>My Orders
                 </a>
-                <div class="dropdown-menu bg-light ps-3" style="margin-left: 10px; border-radius: 6px; border: none;">
-                    <a href="{{ route('bookings.create') }}" class="dropdown-item fw-bold">
-                        Add Booking
-                    </a>
-                    <a href="{{ route('bookings.index') }}" class="dropdown-item fw-bold">
-                        View Bookings
-                    </a>
-                </div>
+                
             </div>
 
             <!-- My Payments -->
@@ -72,7 +65,7 @@
             </div>
             <!-- Live Orders-->
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link " >
+                <a href="{{route('vendor.collect.orders')}}" class="nav-link " >
                     <i class="fa fa-credit-card me-2"></i>Collect Orders
                 </a>
                 
