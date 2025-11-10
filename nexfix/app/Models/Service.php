@@ -1,14 +1,14 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
-{ 
+{
     use HasFactory;
-    protected $fillable=[
+
+    protected $fillable = [
         'name',
         'description',
         'details',
@@ -17,10 +17,24 @@ class Service extends Model
         'image',
         'active',
     ];
-    public function category(){
-        return $this -> belongsTo(ServiceCategory::class,'service_category_id');
+
+    // One service belongs to one category
+    public function category()
+    {
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
     }
-    public function vendorServices(){
+
+    // One service can be offered by many vendors (through pivot)
+    public function vendorServices()
+    {
         return $this->hasMany(VendorService::class);
+    }
+
+    // Shortcut many-to-many access
+    public function vendors()
+    {
+        return $this->belongsToMany(Vendor::class, 'vendor_services')
+                    ->withPivot('price', 'available') // if your pivot has extra fields
+                    ->withTimestamps();
     }
 }

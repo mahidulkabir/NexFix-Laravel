@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,35 +18,34 @@ class Vendor extends Model
         'documents',
     ];
 
-    /**
-     * Relationships
-     */
-
-    // Each vendor belongs to one user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Vendor offers many services through the vendor_services table
     public function vendorServices()
     {
         return $this->hasMany(VendorService::class);
     }
 
-    // Vendor has many reviews
+    // Many-to-many (shortcut)
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'vendor_services')
+                    ->withPivot('price', 'available')
+                    ->withTimestamps();
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
 
-    // Vendor has many subscriptions
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
     }
 
-    // Vendor has many bookings through vendor_services
     public function bookings()
     {
         return $this->hasManyThrough(Booking::class, VendorService::class);
