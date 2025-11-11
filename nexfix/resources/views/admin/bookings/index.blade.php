@@ -12,7 +12,7 @@
         <table class="table table-bordered" id="bookingsTable">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    {{-- <th>ID</th> --}}
                     <th>User</th>
                     <th>Service</th>
                     <th>Vendor</th>
@@ -21,7 +21,7 @@
                     <th>Total</th>
                     <th>Payment</th>
                     <th>Payment Method</th>
-                    <th>User Status</th>   {{-- 🟢 CHANGED: replaced old “Status” --}}
+                    <th>User Status</th> {{-- 🟢 CHANGED: replaced old “Status” --}}
                     <th>Vendor Status</th> {{-- 🟢 CHANGED: added vendor status --}}
                     <th>Notes</th>
                     <th>Action</th>
@@ -30,38 +30,32 @@
             <tbody>
                 @foreach ($bookings as $booking)
                     <tr id="booking-{{ $booking->id }}">
-                        <td>{{ $booking->id }}</td>
+                        {{-- <td>{{ $booking->id }}</td> --}}
                         <td>{{ $booking->user->name ?? 'N/A' }}</td>
                         <td>{{ $booking->service->name ?? 'N/A' }}</td>
 
                         <!-- Vendor Dropdown -->
+
+
+                        <td>{{ $booking->vendor->company_name ?? '-' }}</td>
+
+
+                        <td>{{ $booking->booking_date }}</td>
+                        <td>{{ $booking->scheduled_at ?? '-' }}</td>
+                        <td>{{ $booking->total_amount ?? '0.00' }}</td>
+
+                        <!-- Payment Dropdown -->
                         <td>
-                            <select class="form-select vendor-select" data-id="{{ $booking->id }}">
-                                <option value="">Select Vendor</option>
-                                @foreach ($vendors as $vendor)
-                                    <option value="{{ $vendor->id }}"
-                                        {{ $booking->vendorService?->vendor_id == $vendor->id ? 'selected' : '' }}>
-                                        {{ $vendor->company_name }}
+                            <select class="form-select payment-select" data-id="{{ $booking->id }}">
+                                @foreach (['unpaid', 'paid', 'refunded'] as $pay)
+                                    <option value="{{ $pay }}"
+                                        {{ $booking->payment_status == $pay ? 'selected' : '' }}>
+                                        {{ ucfirst($pay) }}
                                     </option>
                                 @endforeach
                             </select>
                         </td>
 
-                        <td>{{ $booking->booking_date }}</td>
-                        <td>{{ $booking->scheduled_at ?? '-' }}</td>
-                        <td>{{ $booking->total_amount ?? '0.00' }}</td>
-                        
-                        <!-- Payment Dropdown -->
-                        <td>
-                            <select class="form-select payment-select" data-id="{{ $booking->id }}">
-                                @foreach (['unpaid', 'paid', 'refunded'] as $pay)
-                                <option value="{{ $pay }}" {{ $booking->payment_status == $pay ? 'selected' : '' }}>
-                                    {{ ucfirst($pay) }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </td>
-                        
                         <td>{{ $booking->payment_method ?? 'not paid' }}</td>
                         <!-- 🟢 CHANGED: Split status into two dropdowns -->
 
@@ -106,10 +100,12 @@
                             </a>
 
                             <!-- Delete button -->
-                            <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST" style="display:inline-block;">
+                            <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST"
+                                style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure?')">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>

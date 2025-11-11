@@ -1,9 +1,15 @@
 <x-userDashboard.layout>
-   
-
+    
     <div class="container py-5">
         <h2>This is your Dashboard</h2>
     </div>
+
+    <div class="container py-5">
+
+        @yield('content') 
+    </div>
+
+
 <!-- limited time offer  -->
      <div class="container-fluid service py-5">
         <div class="container py-5">

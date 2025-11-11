@@ -51,4 +51,27 @@ class VendorBookingController extends Controller
 
         return view('vendor.my-orders', compact('bookings'));
     }
+
+    // updating vendor status
+
+    public function updateStatus(Request $request, $id)
+    {
+        $vendor = Auth::user()->vendor;
+
+        if (!$vendor) {
+            return response()->json(['message' => 'Vendor profile not found.'], 403);
+        }
+
+        $booking = Booking::where('vendor_id', $vendor->id)->findOrFail($id);
+
+        $request->validate([
+            'status_vendor' => 'required|string|in:accepted,completed,cancelled',
+        ]);
+
+        $booking->update([
+            'status_vendor' => $request->status_vendor,
+        ]);
+
+        return response()->json(['message' => 'Booking status updated successfully!']);
+    }
 }

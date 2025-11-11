@@ -21,7 +21,7 @@
                 @foreach($bookings as $booking)
                     <tr>
                         <td>{{ $booking->service->name ?? 'N/A' }}</td>
-                        <td>{{ $booking->vendor->name ?? 'N/A' }}</td>
+                        <td>{{ $booking->vendor->company_name ?? 'N/A' }}</td>
                         <td>{{ $booking->scheduled_at }}</td>
                         <td>{{ ucfirst($booking->status_user ?? 'Pending') }}</td>
                     </tr>

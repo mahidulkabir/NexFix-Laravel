@@ -5,7 +5,7 @@
 
         <ul class="navbar-nav d-flex flex-row gap-4 align-items-center">
             <li class="nav-item">
-                <a href="">My Bookings</a>
+                <a href="{{route('user.myBooking')}}">My Bookings</a>
 
             </li>
             <li class="nav-item">
