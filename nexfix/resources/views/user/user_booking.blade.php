@@ -23,7 +23,7 @@
                         <td>{{ $booking->service->name ?? 'N/A' }}</td>
                         <td>{{ $booking->vendor->company_name ?? 'N/A' }}</td>
                         <td>{{ $booking->scheduled_at }}</td>
-                        <td>{{ ucfirst($booking->status_user ?? 'Pending') }}</td>
+                        <td>{{ ucfirst($booking->status_user ?? '-') }}</td>
                     </tr>
                 @endforeach
             </tbody>
