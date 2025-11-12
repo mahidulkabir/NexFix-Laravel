@@ -50,6 +50,11 @@
                     <a href="{{ route('payments.index') }}" class="dropdown-item fw-bold">View Payments</a>
                 </div>
             </div>
+            <div class="nav-item dropdown">
+                <a href="{{route('admin.payouts.index')}}" class="nav-link "><i
+                        class="fa fa-table me-2"></i>Vendor Payouts</a>
+                
+            </div>
 
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i

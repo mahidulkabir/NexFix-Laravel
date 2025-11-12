@@ -8,15 +8,7 @@ class Vendor extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'company_name',
-        'bio',
-        'rating',
-        'verified',
-        'available',
-        'documents',
-    ];
+    protected $fillable = ['user_id', 'company_name', 'bio', 'rating', 'verified', 'available', 'documents'];
 
     public function user()
     {
@@ -31,9 +23,7 @@ class Vendor extends Model
     // Many-to-many (shortcut)
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'vendor_services')
-                    ->withPivot('price', 'available')
-                    ->withTimestamps();
+        return $this->belongsToMany(Service::class, 'vendor_services')->withPivot('price', 'available')->withTimestamps();
     }
 
     public function reviews()
@@ -49,5 +39,9 @@ class Vendor extends Model
     public function bookings()
     {
         return $this->hasManyThrough(Booking::class, VendorService::class);
+    }
+    public function payouts()
+    {
+        return $this->hasMany(VendorPayout::class);
     }
 }

@@ -72,6 +72,8 @@ class VendorBookingController extends Controller
             'status_vendor' => $request->status_vendor,
         ]);
 
+        
+
         return response()->json(['message' => 'Booking status updated successfully!']);
     }
 }

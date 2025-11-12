@@ -15,6 +15,7 @@ use App\Http\Controllers\VendorDashboardController;
 use App\Http\Controllers\UserBookingController;
 use App\Http\Controllers\User\UserBookingController as UserViewBooking;
 use App\Http\Controllers\Vendor\VendorBookingController;
+use App\Http\Controllers\AdminPayoutController;
 
 Route::get('/', function () {
     return view('portal.index');
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/user/myBookings', [UserViewBooking::class, 'showBooking'])->name('user.myBooking');
+
+    Route::post('/user/update-booking-status', [UserViewBooking::class, 'updateStatus'])->name('user.updateBookingStatus');
 });
 
 // Route::middleware(['auth', 'role:vendor'])->get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
@@ -72,6 +75,9 @@ Route::prefix('admin')
         Route::resource('bookings', BookingController::class);
         Route::resource('payments', PaymentController::class);
         Route::post('bookings/{id}/ajax-update', [BookingController::class, 'ajaxUpdate'])->name('bookings.ajaxUpdate');
+
+        Route::get('/payouts', [AdminPayoutController::class, 'index'])->name('admin.payouts.index');
+        Route::post('/payouts/{id}/paid', [AdminPayoutController::class, 'markAsPaid'])->name('admin.payouts.markPaid');
     });
 
 require __DIR__ . '/auth.php';
