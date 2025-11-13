@@ -42,17 +42,15 @@
                     <a href="{{ route('bookings.index') }}" class="dropdown-item fw-bold">View Bookings</a>
                 </div>
             </div>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                        class="fa fa-table me-2"></i>Payments</a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a href="{{ route('payments.create') }}" class="dropdown-item fw-bold">Add Payment</a>
-                    <a href="{{ route('payments.index') }}" class="dropdown-item fw-bold">View Payments</a>
-                </div>
-            </div>
+            
             <div class="nav-item dropdown">
                 <a href="{{route('admin.payouts.index')}}" class="nav-link "><i
                         class="fa fa-table me-2"></i>Vendor Payouts</a>
+                
+            </div>
+            <div class="nav-item dropdown">
+                <a href="{{route('admin.reports.index')}}" class="nav-link "><i
+                        class="fa fa-table me-2"></i>reports</a>
                 
             </div>
 

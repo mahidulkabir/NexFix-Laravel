@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -78,6 +79,9 @@ Route::prefix('admin')
 
         Route::get('/payouts', [AdminPayoutController::class, 'index'])->name('admin.payouts.index');
         Route::post('/payouts/{id}/paid', [AdminPayoutController::class, 'markAsPaid'])->name('admin.payouts.markPaid');
+         Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+
+
     });
 
 require __DIR__ . '/auth.php';

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comissions', function (Blueprint $table) {
+        Schema::create('commissions', function (Blueprint $table) {
             $table->id();
             $table->decimal('commission_rate',5,2)->default(10.00); //e.g 10% Commission
             $table->timestamps();

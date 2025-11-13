@@ -33,7 +33,7 @@
                                     <td>{{ $payout->vendor->company_name ?? 'N/A' }}</td>
                                     <td>#{{ $payout->booking_id }}</td>
                                     <td><strong>{{ number_format($payout->total_amount, 2) }}</strong> ৳</td>
-                                    <td class="text-danger">-{{ number_format($payout->admin_commission, 2) }} ৳</td>
+                                    <td class="text-danger">-{{ number_format($payout->commission_amount, 2) }} ৳</td>
                                     <td class="text-success">{{ number_format($payout->vendor_earning, 2) }} ৳</td>
                                     <td>
                                         @if($payout->status === 'paid')

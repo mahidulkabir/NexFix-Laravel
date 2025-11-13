@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\VendorPayout;
 
 class Booking extends Model
 {
@@ -11,30 +12,30 @@ class Booking extends Model
 
     // Relationships
 
-public function createPayoutIfCompleted()
-{
-    if (
-        strtolower($this->status_user) === 'completed' &&
-        strtolower($this->status_vendor) === 'completed' &&
-        !$this->payout
-    ) {
-        DB::transaction(function () {
-            $adminCommissionRate = 0.10;
-            $adminCommission = $this->total_amount * $adminCommissionRate;
-            $vendorEarning = $this->total_amount - $adminCommission;
+// public function createPayoutIfCompleted()
+// {
+//     if (
+//         strtolower($this->status_user) === 'completed' &&
+//         strtolower($this->status_vendor) === 'completed' &&
+//         !$this->payout
+//     ) {
+//         DB::transaction(function () {
+//             $adminCommissionRate = 0.10;
+//             $adminCommission = $this->total_amount * $adminCommissionRate;
+//             $vendorEarning = $this->total_amount - $adminCommission;
 
-            \App\Models\VendorPayout::create([
-                'booking_id' => $this->id,
-                'vendor_id' => $this->vendor_id,
-                'amount' => $vendorEarning,
-                'admin_commission' => $adminCommission,
-                'status' => 'pending',
-            ]);
+//             VendorPayout::create([
+//                 'booking_id' => $this->id,
+//                 'vendor_id' => $this->vendor_id,
+//                 'amount' => $vendorEarning,
+//                 'admin_commission' => $adminCommission,
+//                 'status' => 'pending',
+//             ]);
 
-            $this->update(['status' => 'completed']);
-        });
-    }
-}
+//             $this->update(['status' => 'completed']);
+//         });
+//     }
+// }
 
     public function user()
     {
