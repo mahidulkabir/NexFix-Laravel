@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2025 at 05:28 AM
+-- Generation Time: Nov 14, 2025 at 05:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,25 +47,29 @@ CREATE TABLE `audit_logs` (
 CREATE TABLE `bookings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `vendor_service_id` bigint(20) UNSIGNED NOT NULL,
+  `vendor_service_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `service_id` bigint(20) UNSIGNED NOT NULL,
   `booking_date` datetime DEFAULT NULL,
   `scheduled_at` datetime DEFAULT NULL,
-  `date` date NOT NULL,
   `address` varchar(255) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `status` enum('pending','accepted','completed','cancelled') NOT NULL DEFAULT 'pending',
   `payment_status` enum('unpaid','paid','refunded') NOT NULL DEFAULT 'unpaid',
+  `payment_method` enum('bKash','nagad','card') NOT NULL DEFAULT 'bKash',
+  `status_user` enum('completed','cancelled','pending') DEFAULT NULL,
+  `status_vendor` enum('accepted','completed','cancelled') DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `vendor_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `user_id`, `vendor_service_id`, `booking_date`, `scheduled_at`, `date`, `address`, `total_amount`, `status`, `payment_status`, `notes`, `created_at`, `updated_at`) VALUES
-(3, 2, 1, NULL, NULL, '2025-10-27', 'Rehan Uddin Bhuiyan Road, lakshmipur', 0.00, 'pending', 'unpaid', NULL, '2025-10-26 05:11:17', '2025-10-26 05:11:17');
+INSERT INTO `bookings` (`id`, `user_id`, `vendor_service_id`, `service_id`, `booking_date`, `scheduled_at`, `address`, `total_amount`, `payment_status`, `payment_method`, `status_user`, `status_vendor`, `notes`, `created_at`, `updated_at`, `vendor_id`) VALUES
+(10, 2, NULL, 2, '2025-11-12 00:00:00', '2025-11-13 11:34:00', 'Dhaka Bangladesh', 1500.00, 'paid', 'bKash', 'completed', 'completed', NULL, '2025-11-11 23:34:25', '2025-11-13 03:02:11', 2),
+(11, 2, NULL, 2, '2025-11-13 00:00:00', '2025-11-14 02:30:00', 'Dhaka Bangladesh', 1500.00, 'paid', 'nagad', 'completed', 'completed', NULL, '2025-11-12 22:38:37', '2025-11-13 09:07:26', 2);
 
 -- --------------------------------------------------------
 
@@ -105,6 +109,19 @@ CREATE TABLE `chat_messages` (
   `message` text NOT NULL,
   `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commissions`
+--
+
+CREATE TABLE `commissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `commission_rate` decimal(5,2) NOT NULL DEFAULT 10.00,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -236,7 +253,16 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2025_11_08_041216_create_chat_messaages_table', 3),
 (22, '2025_11_08_042112_create_invoices_table', 4),
 (23, '2025_11_08_042431_create_subscriptions_table', 4),
-(24, '2025_11_08_042702_create_audit_logs_table', 4);
+(24, '2025_11_08_042702_create_audit_logs_table', 4),
+(25, '2025_11_09_041210_add_payment_method_to_bookings_table', 5),
+(26, '2025_11_09_041830_update_payment_method_enum_in_payments_table', 6),
+(27, '2025_11_09_045305_make_vendor_service_id_nullable_in_bookings_table', 6),
+(28, '2025_11_10_144200_update_status_columns_in_bookings_table', 7),
+(29, '2025_11_10_163517_add_vendor_id_to_bookings_table', 8),
+(30, '2025_11_12_052903_update_user_status_enum_to_bookings_table', 9),
+(31, '2025_11_12_142137_create_comissions_table', 10),
+(32, '2025_11_12_142438_create_vendor_payouts_table', 10),
+(33, '2025_11_12_142137_create_commissions_table', 11);
 
 -- --------------------------------------------------------
 
@@ -276,20 +302,13 @@ CREATE TABLE `payments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `booking_id` bigint(20) UNSIGNED NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `method` enum('cash','card','online') NOT NULL DEFAULT 'cash',
+  `method` enum('bkash','nagad','card') DEFAULT 'bkash',
   `payment_gateway` varchar(255) DEFAULT NULL,
   `transaction_id` varchar(255) DEFAULT NULL,
   `status` enum('success','failed','pending') NOT NULL DEFAULT 'pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`id`, `booking_id`, `amount`, `method`, `payment_gateway`, `transaction_id`, `status`, `created_at`, `updated_at`) VALUES
-(2, 3, 500.00, 'online', NULL, NULL, 'pending', '2025-10-26 05:18:37', '2025-10-26 05:18:37');
 
 -- --------------------------------------------------------
 
@@ -337,6 +356,7 @@ CREATE TABLE `services` (
   `service_category_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
+  `details` longtext DEFAULT NULL,
   `base_price` decimal(10,2) NOT NULL DEFAULT 0.00,
   `image` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL,
@@ -348,9 +368,9 @@ CREATE TABLE `services` (
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `service_category_id`, `name`, `description`, `base_price`, `image`, `active`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Fan Cleaning', 'description goes here', 500.00, 'services/kOfOF9bzrClhwG8sAiIPhKOV6WRjB4GaOUwyOv5s.jpg', 1, '2025-10-19 11:07:58', '2025-10-26 05:21:57'),
-(2, 1, 'Bathroom Tank Cleaning', 'DESC', 500.00, 'services/BzopX6YKR7VZLQ5ypFClFFVzDYd7WcDFngP1aqhg.jpg', 1, '2025-10-19 11:11:19', '2025-10-25 12:44:40');
+INSERT INTO `services` (`id`, `service_category_id`, `name`, `description`, `details`, `base_price`, `image`, `active`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Fan Cleaning', 'description goes here', 'There is Details here', 500.00, 'services/kOfOF9bzrClhwG8sAiIPhKOV6WRjB4GaOUwyOv5s.jpg', 1, '2025-10-19 11:07:58', '2025-11-07 23:24:46'),
+(2, 1, 'Bathroom Tank Cleaning', 'DESC', 'Details goes here', 1500.00, 'services/BzopX6YKR7VZLQ5ypFClFFVzDYd7WcDFngP1aqhg.jpg', 1, '2025-10-19 11:11:19', '2025-11-07 23:24:32');
 
 -- --------------------------------------------------------
 
@@ -372,8 +392,8 @@ CREATE TABLE `service_categories` (
 --
 
 INSERT INTO `service_categories` (`id`, `name`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Home Cleaning', 'All types of cleaning services.', NULL, '2025-10-19 11:07:58', '2025-10-19 11:07:58'),
-(2, 'Electrical', 'All types of Electrical services.', NULL, '2025-10-19 11:11:19', '2025-10-22 19:22:03');
+(1, 'Home Cleaning', 'All types of cleaning services.', 'categories/t5Wbs7IPCDXGHpaVJE6zl2ofY7X7h1rOgqMfAoaV.jpg', '2025-10-19 11:07:58', '2025-11-07 23:03:13'),
+(2, 'Electrical', 'All types of Electrical services.', 'categories/ANFk6UKUm7xwyhqZ7qdl5KTecBsGH6S4UAPPQqeV.jpg', '2025-10-19 11:11:19', '2025-11-07 23:03:41');
 
 -- --------------------------------------------------------
 
@@ -395,7 +415,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('LQcCTUpFDWcnutUpNEIow70OoMDm2KAQa17Vb7ba', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoib3FFdWZ3VkE2elhZbEl6U0dmMU5naXhCb1gxM0VBakY5aVBBTXM1YSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM2OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vYm9va2luZ3MiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1761477927);
+('5s8YluAPH2fC3EWE01MIjb3y1xnTiu1UDEm3Zcn6', 2, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiM1pyY1BraXg2eTdLQ3p1MWVkUml3bldGbHdmVUcxek1vV3JIWUtxNCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvdXNlci9teUJvb2tpbmdzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1763093924),
+('IigqUo8kAobtUfGePQ6plcaNGzTmYNw5Az0stYFQ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYUh3VmFMM2ZqSVhFUjlyTjR2b25ucjZ4bldNS0xSSFV5cVp5Y3pCYSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fX0=', 1763095045);
 
 -- --------------------------------------------------------
 
@@ -444,11 +465,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `role`, `address`, `avatar`, `last_login_at`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin Mahidul', 'admin@nexfix.com', NULL, NULL, '$2y$12$aDTHLZhaH5lRiHdcyzeA8.6Yq9QL4VwLXx9trZiiTCrHrjhurB2bK', 'admin', NULL, NULL, NULL, NULL, '2025-10-19 11:11:19', '2025-10-20 04:13:52'),
-(2, 'user 1', 'mherzog@example.org', NULL, '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'user', NULL, NULL, NULL, 'Dy97XnKEPC', '2025-10-20 04:13:52', '2025-10-20 04:13:52'),
-(3, 'user 2', 'ngreen@example.net', NULL, '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'user', NULL, NULL, NULL, 's823NLTJo3', '2025-10-20 04:13:52', '2025-10-20 04:13:52'),
-(4, 'user 3', 'evert.monahan@example.org', NULL, '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'user', NULL, NULL, NULL, '7g0lN5We6o', '2025-10-20 04:13:52', '2025-10-20 04:13:52'),
-(5, 'vendor1', 'sammy.mitchell@example.com', NULL, '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'vendor', NULL, NULL, NULL, 'eiqBKdGXKd', '2025-10-20 04:13:52', '2025-10-20 04:13:52'),
-(6, 'vendor 2', 'loren35@example.net', NULL, '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'vendor', NULL, NULL, NULL, 'w57c24xDZu', '2025-10-20 04:13:52', '2025-10-20 04:13:52');
+(2, 'user 1', 'user@nexfix.com', '01521784031', '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'user', NULL, NULL, NULL, 'iolBpKHSLToTstroan98zYkJmgqpZMmCN3vsPGzopbD8K8HEzL9yD72EMrrO', '2025-10-20 04:13:52', '2025-10-20 04:13:52'),
+(5, 'vendor1', 'vendor@nexfix.com', '01521784039', '2025-10-20 04:13:52', '$2y$12$DlDSN1TR6QCabvwsrWm..edKpt07wXVqW9FjiK7s3.So4vOfWNe/K', 'vendor', NULL, NULL, NULL, '2uafhtqKPRNYttSg6I3lHrTzU3FjcFXDvhHymQSrFpHyIF5J4e3iNrdkTuGP', '2025-10-20 04:13:52', '2025-10-20 04:13:52');
 
 -- --------------------------------------------------------
 
@@ -476,8 +494,34 @@ CREATE TABLE `vendors` (
 --
 
 INSERT INTO `vendors` (`id`, `user_id`, `company_name`, `bio`, `rating`, `phone`, `address`, `verified`, `created_at`, `updated_at`, `available`, `documents`) VALUES
-(2, 5, 'Electro Clean', NULL, 0, '01700000000', 'Dhaka', 1, '2025-10-19 11:11:20', '2025-10-19 11:11:20', 1, NULL),
-(3, 6, 'Home Clean', NULL, 0, '01700000000', 'Dhaka', 1, '2025-10-20 04:13:53', '2025-10-20 04:13:53', 1, NULL);
+(2, 5, 'Electro Clean', NULL, 0, '01700000000', 'Dhaka', 1, '2025-10-19 11:11:20', '2025-10-19 11:11:20', 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_payouts`
+--
+
+CREATE TABLE `vendor_payouts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `booking_id` bigint(20) UNSIGNED NOT NULL,
+  `vendor_id` bigint(20) UNSIGNED NOT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  `commission_amount` decimal(10,2) NOT NULL,
+  `vendor_earning` decimal(10,2) NOT NULL,
+  `status` enum('pending','paid') NOT NULL DEFAULT 'pending',
+  `paid_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vendor_payouts`
+--
+
+INSERT INTO `vendor_payouts` (`id`, `booking_id`, `vendor_id`, `total_amount`, `commission_amount`, `vendor_earning`, `status`, `paid_at`, `created_at`, `updated_at`) VALUES
+(2, 10, 2, 1500.00, 150.00, 1350.00, 'paid', NULL, '2025-11-13 03:02:11', '2025-11-13 09:06:01'),
+(3, 11, 2, 1500.00, 150.00, 1350.00, 'paid', NULL, '2025-11-13 09:07:26', '2025-11-13 09:07:44');
 
 -- --------------------------------------------------------
 
@@ -533,7 +577,8 @@ ALTER TABLE `audit_logs`
 ALTER TABLE `bookings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `bookings_user_id_foreign` (`user_id`),
-  ADD KEY `bookings_vendor_service_id_foreign` (`vendor_service_id`);
+  ADD KEY `bookings_vendor_service_id_foreign` (`vendor_service_id`),
+  ADD KEY `bookings_vendor_id_foreign` (`vendor_id`);
 
 --
 -- Indexes for table `cache`
@@ -555,6 +600,12 @@ ALTER TABLE `chat_messages`
   ADD KEY `chat_messages_sender_id_foreign` (`sender_id`),
   ADD KEY `chat_messages_receiver_id_foreign` (`receiver_id`),
   ADD KEY `chat_messages_booking_id_foreign` (`booking_id`);
+
+--
+-- Indexes for table `commissions`
+--
+ALTER TABLE `commissions`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `discounts`
@@ -677,6 +728,14 @@ ALTER TABLE `vendors`
   ADD KEY `vendors_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `vendor_payouts`
+--
+ALTER TABLE `vendor_payouts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vendor_payouts_booking_id_foreign` (`booking_id`),
+  ADD KEY `vendor_payouts_vendor_id_foreign` (`vendor_id`);
+
+--
 -- Indexes for table `vendor_services`
 --
 ALTER TABLE `vendor_services`
@@ -706,12 +765,18 @@ ALTER TABLE `audit_logs`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `chat_messages`
 --
 ALTER TABLE `chat_messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `commissions`
+--
+ALTER TABLE `commissions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -742,7 +807,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -790,12 +855,18 @@ ALTER TABLE `subscriptions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `vendor_payouts`
+--
+ALTER TABLE `vendor_payouts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
@@ -825,6 +896,7 @@ ALTER TABLE `audit_logs`
 --
 ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `bookings_vendor_service_id_foreign` FOREIGN KEY (`vendor_service_id`) REFERENCES `vendor_services` (`id`) ON DELETE CASCADE;
 
 --
@@ -885,6 +957,13 @@ ALTER TABLE `subscriptions`
 --
 ALTER TABLE `vendors`
   ADD CONSTRAINT `vendors_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `vendor_payouts`
+--
+ALTER TABLE `vendor_payouts`
+  ADD CONSTRAINT `vendor_payouts_booking_id_foreign` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `vendor_payouts_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `vendor_services`

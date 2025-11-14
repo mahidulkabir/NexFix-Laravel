@@ -1,6 +1,7 @@
-@extends('dashboard.user')
+@extends('components.userDashboard.layout')
 @section('content')
-    <div class="container mt-5">
+
+    <div class="container mt-5 pt-5">
         <h2 class="fw-bold text-center mb-4 text-primary">My Bookings</h2>
 
 
