@@ -79,6 +79,7 @@ Route::prefix('admin')
 
         Route::get('/payouts', [AdminPayoutController::class, 'index'])->name('admin.payouts.index');
         Route::post('/payouts/{id}/paid', [AdminPayoutController::class, 'markAsPaid'])->name('admin.payouts.markPaid');
+        //  Route::get('/admin/dashboard', [AdminReportController::class, 'index'])->name('admin.reports.index');
          Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
 
 
