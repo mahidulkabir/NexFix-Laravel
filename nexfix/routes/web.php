@@ -21,6 +21,12 @@ use App\Http\Controllers\AdminPayoutController;
 Route::get('/', function () {
     return view('portal.index');
 });
+Route::get('/contact', function () {
+    return view('portal.contact');
+});
+Route::get('/all-service', function () {
+    return view('portal.allService');
+});
 Route::get('/service-detail/{id}', [PortalController::class, 'serviceDetail'])->name('portal.serviceDetail');
 
 Route::get('/checkout/{id}', [PortalController::class, 'checkoutRedirect'])->name('checkout.redirect');
