@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 
 class AllServiceController extends Controller
 {
     public function index()
-    {
+    {   
+      
+          $categories = ServiceCategory::take(3)->get();
         $services = Service::all();
 
-        return view('portal.allService', compact( 'services'));
+        return view('portal.allService', compact( 'categories','services'));
     }
     public function serviceDetail($id)
     {

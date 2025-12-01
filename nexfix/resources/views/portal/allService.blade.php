@@ -4,11 +4,11 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
+        <h1 class="text-center text-white display-6">All Service</h1>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
+            <li class="breadcrumb-item active text-white">all service</li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -17,7 +17,7 @@
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
-            <h1 class="mb-4">Fresh fruits shop</h1>
+            <h1 class="mb-4">All Our Services </h1>
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
@@ -124,63 +124,42 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <h4 class="mb-3">Featured products</h4>
-                                    <div class="d-flex align-items-center justify-content-start">
-                                        <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                            <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-2">Big Banana</h6>
-                                            <div class="d-flex mb-2">
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star"></i>
+                                    <h4 class="mb-3">Featured Categories</h4>
+                                    <div class="row g-4 d-flex flex-column">
+                                        @foreach ($categories as $category)
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                        <img src="{{ asset('storage/' . $category->image) }}"
+                                                            class="img-fluid rounded" alt="{{ $category->name }}">
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-2">{{ $category->name }}</h6>
+
+                                                        <!-- Optional: Star rating -->
+                                                        <div class="d-flex mb-2">
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                @if ($i <= $category->rating)
+                                                                    <i class="fa fa-star text-secondary"></i>
+                                                                @else
+                                                                    <i class="fa fa-star"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
+
+                                                        <!-- Optional: Price -->
+                                                        <div class="d-flex mb-2">
+                                                            <h5 class="fw-bold me-2">${{ $category->price ?? '0.00' }}
+                                                            </h5>
+                                                            @if (isset($category->old_price))
+                                                                <h5 class="text-danger text-decoration-line-through">
+                                                                    ${{ $category->old_price }}</h5>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="d-flex mb-2">
-                                                <h5 class="fw-bold me-2">2.99 $</h5>
-                                                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-start">
-                                        <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                            <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-2">Big Banana</h6>
-                                            <div class="d-flex mb-2">
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="d-flex mb-2">
-                                                <h5 class="fw-bold me-2">2.99 $</h5>
-                                                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-start">
-                                        <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                            <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-2">Big Banana</h6>
-                                            <div class="d-flex mb-2">
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star text-secondary"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="d-flex mb-2">
-                                                <h5 class="fw-bold me-2">2.99 $</h5>
-                                                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                     <div class="d-flex justify-content-center my-4">
                                         <a href="#"
@@ -188,16 +167,7 @@
                                             More</a>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="position-relative">
-                                        <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded"
-                                            alt="">
-                                        <div class="position-absolute"
-                                            style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                            <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -209,13 +179,13 @@
                                             <div class="fruite-img">
                                                 <!-- Image from database -->
                                                 <img src="{{ asset('storage/' . $service->image) }}"
-                                                    class="img-fluid w-100 rounded-top" >
+                                                    class="img-fluid w-100 rounded-top">
                                             </div>
 
                                             <!-- Category badge -->
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                 style="top: 10px; left: 10px;">
-                                               Top Rated
+                                                Top Rated
                                             </div>
 
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
