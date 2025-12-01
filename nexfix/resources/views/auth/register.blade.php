@@ -1,66 +1,129 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    {{-- Bootstrap --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+    <style>
+        
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-        {{-- phone number  --}}
-        <div class="mt-4">
-            <x-input-label for="phone" :value="__('Phone')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
-                required autofocus autocomplete="phone" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-        </div>
-        {{-- choosing role  --}}
-        <div class="mt-4">
-            <label for="role" class="block text-sm font-medium text-gray-700">Register as:</label>
-            <select name="role" id="role" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                <option value="user">User</option>
-                <option value="vendor">Vendor</option>
-            </select>
-        </div>
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        .register-card {
+            width: 480px;
+            border-radius: 16px;
+            background: #fff;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.6s ease;
+        }
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="new-password" />
+        .btn-theme {
+            background: linear-gradient(135deg, #FFB524, #81C408);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: 0.3s ease-in-out;
+        }
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        .btn-theme:hover {
+            background: linear-gradient(135deg, #e49f20, #6aac06);
+            color: #fff;
+        }
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        .title-text {
+            background: linear-gradient(135deg, #FFB524, #81C408);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" required autocomplete="new-password" />
+        a.theme-link {
+            color: #FFB524;
+            font-weight: 500;
+        }
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+        a.theme-link:hover {
+            color: #e49f20;
+        }
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
 
-            <x-primary-button class="ms-4">
+    <div class="register-card mt-5 mb-5">
+        <h3 class="text-center mb-4 title-text">Create Account</h3>
+
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">{{ __('Name') }}</label>
+                <input id="name" type="text"
+                    class="form-control @error('name') is-invalid @enderror"
+                    name="name" value="{{ old('name') }}" required autofocus>
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">{{ __('Email') }}</label>
+                <input id="email" type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    name="email" value="{{ old('email') }}" required>
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label">{{ __('Phone') }}</label>
+                <input id="phone" type="text"
+                    class="form-control @error('phone') is-invalid @enderror"
+                    name="phone" value="{{ old('phone') }}" required>
+                @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Role -->
+            <div class="mb-3">
+                <label for="role" class="form-label">Register as:</label>
+                <select name="role" id="role" class="form-select">
+                    <option value="user">User</option>
+                    <option value="vendor">Vendor</option>
+                </select>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label">{{ __('Password') }}</label>
+                <input id="password" type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    name="password" required>
+                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label class="form-label">{{ __('Confirm Password') }}</label>
+                <input id="password_confirmation" type="password"
+                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                    name="password_confirmation" required>
+                @error('password_confirmation') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Login Link -->
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ route('login') }}" class="theme-link">
+                    {{ __('Already registered?') }}
+                </a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-theme w-100 py-2">
                 {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+            </button>
+        </form>
+    </div>
+
+    {{-- Bootstrap JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </x-guest-layout>
