@@ -17,6 +17,7 @@ use App\Http\Controllers\UserBookingController;
 use App\Http\Controllers\User\UserBookingController as UserViewBooking;
 use App\Http\Controllers\Vendor\VendorBookingController;
 use App\Http\Controllers\AdminPayoutController;
+use App\Http\Controllers\AllServiceController;
 
 Route::get('/', function () {
     return view('portal.index');
@@ -40,6 +41,7 @@ Route::post('/checkoutOrder', [UserBookingController::class, 'store'])->name('ch
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/', [PortalController::class, 'index'])->name('portal.index');
+Route::get('/all-service', [AllServiceController::class, 'index'])->name('portal.allService');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
