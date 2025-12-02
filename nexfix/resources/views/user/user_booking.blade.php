@@ -1,6 +1,7 @@
 @extends('components.userDashboard.layout')
 @section('content')
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <div class="container mt-5 pt-5">
         <h2 class="fw-bold text-center mb-4 text-primary">My Bookings</h2>
 
@@ -57,11 +58,11 @@
                         {{-- Buttons --}}
                         <div class="action-area text-center mt-3">
                             @if ($statusKey == 'pending')
-                                <button class="btn btn-success me-2 do-confirm-status" data-id="{{ $booking->id }}"
+                                <button class="booking-btn btn-success me-2 do-confirm-status" data-id="{{ $booking->id }}"
                                     data-status="Completed">
                                     <i class="fa fa-check me-1"></i> Complete
                                 </button>
-                                <button class="btn btn-outline-danger do-confirm-status" data-id="{{ $booking->id }}"
+                                <button class="booking-btn btn-outline-danger do-confirm-status" data-id="{{ $booking->id }}"
                                     data-status="Cancelled">
                                     <i class="fa fa-times me-1"></i> Cancel
                                 </button>
@@ -105,8 +106,8 @@
                     <p class="fs-6 text-muted mb-0" id="confirmMessage"></p>
                 </div>
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmActionBtn">Yes, Confirm</button>
+                    <button type="button" class="booking-btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="booking-btn btn-primary" id="confirmActionBtn">Yes, Confirm</button>
                 </div>
             </div>
         </div>
@@ -135,13 +136,13 @@
             border-radius: 50px;
         }
 
-        .btn {
+        .booking-btn {
             border-radius: 8px;
             min-width: 110px;
             transition: all .15s ease;
         }
 
-        .btn:hover {
+        .booking-btn:hover {
             transform: translateY(-1px);
         }
 

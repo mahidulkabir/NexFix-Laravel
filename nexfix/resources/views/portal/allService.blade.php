@@ -125,11 +125,11 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <h4 class="mb-3">Featured Categories</h4>
-                                    <div class="row g-4 d-flex flex-column">
+                                    <div class="d-flex flex-column">
                                         @foreach ($categories as $category)
                                             <div class="col-md-6 col-lg-4">
                                                 <div class="d-flex align-items-center justify-content-start">
-                                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                    <div class="rounded me-4 flex-shrink-0" style="width: 100px; height: 100px;">
                                                         <img src="{{ asset('storage/' . $category->image) }}"
                                                             class="img-fluid rounded" alt="{{ $category->name }}">
                                                     </div>
@@ -147,15 +147,7 @@
                                                             @endfor
                                                         </div>
 
-                                                        <!-- Optional: Price -->
-                                                        <div class="d-flex mb-2">
-                                                            <h5 class="fw-bold me-2">${{ $category->price ?? '0.00' }}
-                                                            </h5>
-                                                            @if (isset($category->old_price))
-                                                                <h5 class="text-danger text-decoration-line-through">
-                                                                    ${{ $category->old_price }}</h5>
-                                                            @endif
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -198,7 +190,7 @@
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <!-- Price -->
                                                     <p class="text-dark fs-5 fw-bold mb-0">
-                                                        ${{ $service->price ?? $service->base_price }}/kg</p>
+                                                        ${{ $service->price ?? $service->base_price }}</p>
 
                                                     <!-- Action button -->
                                                     <a href="{{ route('portal.serviceDetail', $service->id) }}"

@@ -38,7 +38,7 @@ class ServiceController extends Controller
             'details'=>'required',
             'service_category_id'=>'required|exists:service_categories,id',
             'base_price'=>'required|numeric|min:0',
-            'image'=>'required|image|mimes:jpg,jpeg|max:512',
+            'image'=>'required|image|mimes:jpg,jpeg|max:2048',
         ]);
           $imagePath=$request->file('image')->store('services','public');
           Service::create([
@@ -86,7 +86,7 @@ class ServiceController extends Controller
             'details'=>'required',
             'service_category_id' =>'required|exists:service_categories,id',
             'base_price' =>'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg|max:512',
+            'image' => 'nullable|image|mimes:jpg,jpeg|max:2048',
         ]);
         $data = $request->only(['name', 'description', 'details', 'service_category_id', 'base_price', 'active']);
 
